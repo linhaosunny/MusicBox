@@ -37,6 +37,13 @@ class MusicList: NSObject {
         shared.isUpdateList = true
     }
     
+    /// 获取单前加载到的曲库
+    ///
+    /// - Returns: <#return value description#>
+    class func getLoadSongList() -> [Song] {
+        return shared.songList
+    }
+    
     /// 获取播放列表
     ///
     /// - Parameter user: <#user description#>

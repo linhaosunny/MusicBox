@@ -396,18 +396,20 @@ extension MusicLocalListView {
         DispatchQueue.main.async { [weak self] in
             if let userInfo:[String:Int] = notification.object as? [String:Int],
                 let statusValue = userInfo["status"],let status = MusicLoadingStatus(rawValue: statusValue) {
-                let model = MusicLocalListViewModel.createViewModel()
-                model.status = status
-                self?.viewModel = model
-                
+
                 switch status {
                 case .start:
                     QL1("开始加载")
                 case .loading:
                     QL1("加载中")
+                    MusicBox.getLoadMusicList()
                 case .loaded:
                     QL1("加载完成")
                 }
+                
+                let model = MusicLocalListViewModel.createViewModel()
+                model.status = status
+                self?.viewModel = model
             }
         }
     }

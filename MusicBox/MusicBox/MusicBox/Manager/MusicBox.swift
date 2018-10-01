@@ -387,6 +387,11 @@ extension MusicBox {
         MusicList.appendMusic(shared.userKey, song: song)
     }
     
+    /// 获取加载中的曲库
+    public class func getLoadMusicList() {
+        shared.songList = MusicList.getLoadSongList()
+        return
+    }
    
     
     /// 转换成mp3格式
