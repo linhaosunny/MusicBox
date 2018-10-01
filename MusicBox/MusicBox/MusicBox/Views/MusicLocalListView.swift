@@ -16,6 +16,10 @@ class MusicLocalListView: UIView {
             updateMusicLocalListView(viewModel)
         }
     }
+    
+    /// 是否滚动到底部
+    var isScrollToBottom:Bool = false
+    
     /// 屏幕属性
     fileprivate var screen_type:ScreenDirection = .portrail
     
@@ -270,8 +274,14 @@ class MusicLocalListView: UIView {
         
         listView.reloadData()
         
+        
+        
         if let list = dataList,list.count > 0 {
             noDataView.isHidden = true
+            
+            if isScrollToBottom {
+                listView.scrollToRow(at: IndexPath(item: list.count - 1, section: 0), at: .bottom, animated: true)
+            }
             return
         }
         
@@ -403,7 +413,9 @@ extension MusicLocalListView {
                 case .loading:
                     QL1("加载中")
                     MusicBox.getLoadMusicList()
+                    self?.isScrollToBottom = true
                 case .loaded:
+                    self?.isScrollToBottom = false
                     QL1("加载完成")
                 }
                 
