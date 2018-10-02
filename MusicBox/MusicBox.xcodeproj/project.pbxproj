@@ -156,6 +156,7 @@
 		85B09A8321629634007102D2 /* select_btn_s_purple@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85B09A7721629633007102D2 /* select_btn_s_purple@3x.png */; };
 		85B09A8421629634007102D2 /* select_btn_s_yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85B09A7821629633007102D2 /* select_btn_s_yellow@3x.png */; };
 		85B09A8521629634007102D2 /* select_btn_s_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85B09A7921629633007102D2 /* select_btn_s_red@3x.png */; };
+		85B09A8721632F9A007102D2 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8621632F9A007102D2 /* MusicPlayer.swift */; };
 		B11001364CF2C6B7E17BA5E8 /* Pods_MusicBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBFA683040A69382D508AA3 /* Pods_MusicBox.framework */; };
 /* End PBXBuildFile section */
 
@@ -314,6 +315,7 @@
 		85B09A7721629633007102D2 /* select_btn_s_purple@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_btn_s_purple@3x.png"; sourceTree = "<group>"; };
 		85B09A7821629633007102D2 /* select_btn_s_yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_btn_s_yellow@3x.png"; sourceTree = "<group>"; };
 		85B09A7921629633007102D2 /* select_btn_s_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_btn_s_red@3x.png"; sourceTree = "<group>"; };
+		85B09A8621632F9A007102D2 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -409,6 +411,7 @@
 			children = (
 				85B0995A21626EA9007102D2 /* MusicNotification.swift */,
 				85B0995B21626EA9007102D2 /* MusicBox.swift */,
+				85B09A8621632F9A007102D2 /* MusicPlayer.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -939,6 +942,7 @@
 				85B0996721626EAA007102D2 /* Song.swift in Sources */,
 				85B0996821626EAA007102D2 /* PersionPreference.swift in Sources */,
 				85B0996D21626EAA007102D2 /* MusicListCell.swift in Sources */,
+				85B09A8721632F9A007102D2 /* MusicPlayer.swift in Sources */,
 				85B09A1821628D66007102D2 /* AnimatorIndactorView.swift in Sources */,
 				85B0993F21626604007102D2 /* ViewController.swift in Sources */,
 				85B0997021626EAA007102D2 /* MusicBoxPopView.swift in Sources */,

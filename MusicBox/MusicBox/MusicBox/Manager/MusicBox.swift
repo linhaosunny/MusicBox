@@ -46,11 +46,20 @@ class MusicBox: NSObject {
     var isMusixBoxBackground:Bool = true
     // 歌曲加载状态
     var loadSongStatus:MusicLoadingStatus = .loaded
+    // 是否使用内部播放器
+    fileprivate var isInternelPlayer:Bool = true
     
     fileprivate var completed:((_ action:MusicActionType,_ info:PersionPreference)->())?
     
     /// 初始化音乐盒
-    class func setupMusicBox() {
+    class func setupMusicBox(isInternelPlayer:Bool = true) {
+        
+        shared.isInternelPlayer = isInternelPlayer
+        
+        if isInternelPlayer {
+            MusicPlayer.setupPlayer()
+        }
+        
         // 读取个人配置
         Preference.getPreference(shared.userKey,song:nil)
         
@@ -105,18 +114,24 @@ class MusicBox: NSObject {
     ///   - complete: <#complete description#>
     class func showBox(_ screen:ScreenDirection = .portrail, complete:@escaping (_ action:MusicActionType,_ info:PersionPreference)->()) {
         
-        shared.completed = complete
+        //使用内部播放器
+        if shared.isInternelPlayer {
+            shared.completed = internalPlayerComplete()
+        } else {
+            shared.completed = complete
+        }
         
-        let musicBox = MusicBoxPopView(screen, complete: complete, finish: {
-            if Preference.shared.isUpdate {
-                Preference.updatePeferenceFile(shared.userKey, successed: { (prefrence, msg) in
-                }, failed: { (msg) in
-                })
-            }
-        })
-        
-        musicBox.viewModel = MusicBoxViewModel.createViewModel()
-        musicBox.show()
+        if let operation = shared.completed {
+            let musicBox = MusicBoxPopView(screen, complete: operation, finish: {
+                if Preference.shared.isUpdate {
+                    Preference.updatePeferenceFile(shared.userKey, successed: { (prefrence, msg) in
+                    }, failed: { (msg) in
+                    })
+                }
+            })
+            musicBox.viewModel = MusicBoxViewModel.createViewModel()
+            musicBox.show()
+        }
     }
     
     /// 读取本地音乐
@@ -163,8 +178,64 @@ class MusicBox: NSObject {
     }
 }
 
+// MARK: - 内部播放工具
+extension MusicBox {
+    
+    /// 内部播放操作
+    ///
+    /// - Parameter operation: <#operation description#>
+    /// - Returns: <#return value description#>
+    fileprivate class func internalPlayerOperation(_ operation:@escaping ((_ action:MusicActionType,_ info:PersionPreference)->()) ) -> ((_ action:MusicActionType,_ info:PersionPreference)->()) {
+        return operation
+    }
+    
+    /// 内部播放操作
+    fileprivate class func internalPlayerComplete() -> ((_ action:MusicActionType,_ info:PersionPreference)->()) {
+        return internalPlayerOperation { (action, preference) in
+            switch action {
+            case .switchPlay:
+                QL1("切换歌曲")
+                let playUrl = preference.playUrl ?? ""
+                
+                MusicPlayer.playMusic(playUrl)
+                
+//                livePusher?.startBGM(withMusicPathAsync: playUrl)
+//                livePusher?.setAudioDenoise(true)
+//                livePusher?.setBGMEarsBack(true)
+//                livePusher?.setCaptureVolume(50)
+            case .play:
+                QL1("播放和暂停")
+                if preference.isPlay {
+                    MusicPlayer.resumePlayer()
+                } else {
+                    MusicPlayer.pausePlayer()
+                }
+            case .stop:
+                QL1("结束播放")
+                MusicPlayer.stopPlayer()
+            case .mute:
+                QL1("静音和恢复播放")
+                if !preference.isMute {
+                      MusicPlayer.updateVolume(Float(preference.volume)/100.0)
+                } else {
+                      MusicPlayer.updateVolume(0.0)
+                }
+            case .volume:
+                QL1("音量调整")
+                MusicPlayer.updateVolume(Float(preference.volume)/100.0)
+            case .runLoop:
+                QL1("歌曲循环")
+                MusicPlayer.setLoop(preference.isRunLoop)
+            case .songList:
+                QL1("进入本地曲库列表")
+            }
+        }
+    }
+}
+
 // MARK: - 相关工具
 extension MusicBox {
+    
     class func timeToSeconds(time: TimeInterval) -> String {
         
         let timeTicks = time

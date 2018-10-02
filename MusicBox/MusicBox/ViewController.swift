@@ -34,7 +34,7 @@ class ViewController: UIViewController {
         
         popMusicButton.addTarget(self, action: #selector(popMusicBoxButtonClick), for: .touchUpInside)
         
-        MusicBox.setupMusicBox()
+        MusicBox.setupMusicBox(isInternelPlayer: true)
         
         setupPrintLog()
     }

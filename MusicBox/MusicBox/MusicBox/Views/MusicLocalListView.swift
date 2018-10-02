@@ -263,7 +263,7 @@ class MusicLocalListView: UIView {
                 
                 let range = NSMakeRange(head.count, active.count)
                 
-                totalMusicLabel.setContent(content, withAttributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 26.0.cgFloat),NSAttributedString.Key.foregroundColor:UIColor.colorWithHex(rgb: 0x888888)], withActionAttributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 26.0.cgFloat),NSAttributedString.Key.foregroundColor:UIColor.colorWithTheme()], withActionTextRange: range)
+                totalMusicLabel.setContent(content, withAttributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize:  26.0.cgFloat),NSAttributedString.Key.foregroundColor:UIColor.colorWithHex(rgb: 0x888888)], withActionAttributes: [NSAttributedString.Key.font:UIFont.systemFont(ofSize: 26.0.cgFloat),NSAttributedString.Key.foregroundColor:UIColor.colorWithTheme()], withActionTextRange: range)
             }
         }
         
