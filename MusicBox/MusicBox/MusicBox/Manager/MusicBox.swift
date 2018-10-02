@@ -55,6 +55,9 @@ class MusicBox: NSObject {
     deinit {
         if isInternelPlayer {
             NotificationCenter.default.removeObserver(self, name: MusicBoxInterPlayerPlayCompletedKey, object: nil)
+            
+            NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name: AVAudioSession.routeChangeNotification, object: nil)
         }
     }
     
@@ -63,6 +66,9 @@ class MusicBox: NSObject {
     
         if shared.isInternelPlayer {
             NotificationCenter.default.removeObserver(self, name: MusicBoxInterPlayerPlayCompletedKey, object: nil)
+            NotificationCenter.default.removeObserver(self, name: AVAudioSession.interruptionNotification, object: nil)
+            NotificationCenter.default.removeObserver(self, name:
+                AVAudioSession.routeChangeNotification, object: nil)
         }
         
         shared.isInternelPlayer = isInternelPlayer
@@ -70,6 +76,10 @@ class MusicBox: NSObject {
         if isInternelPlayer {
             MusicPlayer.setupPlayer()
             NotificationCenter.default.addObserver(shared, selector: #selector(internalPlayerPlayCompleted), name: MusicBoxInterPlayerPlayCompletedKey, object: nil)
+            // 监听音频意外中断和耳机拔出
+            NotificationCenter.default.addObserver(shared, selector: #selector(handleInterruption(_:)), name: AVAudioSession.interruptionNotification, object: nil)
+            // 添加线路变化
+            NotificationCenter.default.addObserver(shared, selector: #selector(hanldeRouteChange(_:)), name: AVAudioSession.routeChangeNotification, object: nil)
         }
 
         // 读取个人配置
@@ -193,6 +203,61 @@ class MusicBox: NSObject {
 
 // MARK: - 内部播放工具
 extension MusicBox {
+    
+    /// 音频意外中断或拔出
+    ///
+    /// - Parameter notifcation: <#notifcation description#>
+    @objc fileprivate func handleInterruption(_ notifcation:Notification) {
+        
+        if let info = notifcation.userInfo,let typeValue = info["AVAudioSessionInterruptionTypeKey"] as? UInt,let type = AVAudioSession.InterruptionType(rawValue: typeValue)  {
+            
+            switch type {
+            case .began:
+                MusicPlayer.pausePlayer()
+            case .ended:
+                MusicPlayer.setupPlayer()
+                
+                if let optionsValue = info[AVAudioSessionInterruptionOptionKey] as? UInt {
+                    let options = AVAudioSession.InterruptionOptions(rawValue: optionsValue)
+                    if options == .shouldResume {
+                        MusicPlayer.resumePlayer()
+                    } else {
+                        MusicPlayer.resumePlayer()
+                    }
+                }
+            }
+        }
+    }
+    
+    /// 处理线路变化
+    ///
+    /// - Parameter notification: <#notification description#>
+    @objc fileprivate func hanldeRouteChange(_ notification:Notification) {
+        guard let userInfo = notification.userInfo,
+            let reasonValue = userInfo[AVAudioSessionRouteChangeReasonKey] as? UInt,
+            let reason = AVAudioSession.RouteChangeReason(rawValue:reasonValue) else {
+                return
+        }
+        
+        switch reason {
+        case .newDeviceAvailable:
+            let session = AVAudioSession.sharedInstance()
+            for output in session.currentRoute.outputs where output.portType == AVAudioSession.Port.headphones {
+                MusicPlayer.resumePlayer()
+                break
+            }
+        case .oldDeviceUnavailable:
+            if let previousRoute =
+                userInfo[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription {
+                for output in previousRoute.outputs where output.portType == AVAudioSession.Port.headphones {
+                    MusicPlayer.pausePlayer()
+                    break
+                }
+            }
+        default: ()
+        }
+        
+    }
     
     /// 内部播放器播放结束
     @objc fileprivate func internalPlayerPlayCompleted() {

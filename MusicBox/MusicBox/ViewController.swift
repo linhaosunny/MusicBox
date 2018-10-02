@@ -39,6 +39,10 @@ class ViewController: UIViewController {
         setupPrintLog()
     }
     
+    deinit {
+        MusicBox.closePlay()
+    }
+    
     @objc fileprivate func popMusicBoxButtonClick() {
         MusicBox.showBox(.portrail, complete: { [weak self] (action, preference) in
             self?.processMusicBoxAction(action, preference: preference)
