@@ -10,7 +10,7 @@
  
  ****
  - 播放列表 优化后样子
- <img src="https://github.com/linhaosunny/MusicBox/blob/master/tu/IMG_3511.PNG" width="215" height="380" alt="图片2-1" />
+ <img src="https://github.com/linhaosunny/MusicBox/blob/master/tu/IMG_3513.PNG" width="215" height="380" alt="图片2-1" />
  
  ****
  
