@@ -159,6 +159,7 @@
 		85B09A8721632F9A007102D2 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8621632F9A007102D2 /* MusicPlayer.swift */; };
 		85B09A8921636825007102D2 /* AlbumPictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8821636825007102D2 /* AlbumPictures.swift */; };
 		85B09A8B2163817C007102D2 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8A2163817C007102D2 /* CALayer+Extension.swift */; };
+		85B09A8D2163A516007102D2 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8C2163A516007102D2 /* UIImageView+Extension.swift */; };
 		B11001364CF2C6B7E17BA5E8 /* Pods_MusicBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBFA683040A69382D508AA3 /* Pods_MusicBox.framework */; };
 /* End PBXBuildFile section */
 
@@ -320,6 +321,7 @@
 		85B09A8621632F9A007102D2 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
 		85B09A8821636825007102D2 /* AlbumPictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPictures.swift; sourceTree = "<group>"; };
 		85B09A8A2163817C007102D2 /* CALayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
+		85B09A8C2163A516007102D2 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -453,6 +455,7 @@
 				85B0997221627321007102D2 /* String+Extension.swift */,
 				85B0997421627410007102D2 /* CGFloat+Extension.swift */,
 				85B09A8A2163817C007102D2 /* CALayer+Extension.swift */,
+				85B09A8C2163A516007102D2 /* UIImageView+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -946,6 +949,7 @@
 				85B0998121627AF1007102D2 /* AlignLabel.swift in Sources */,
 				85B0996321626EAA007102D2 /* MusicListCellViewModel.swift in Sources */,
 				85B0997921627682007102D2 /* CustomSlider.swift in Sources */,
+				85B09A8D2163A516007102D2 /* UIImageView+Extension.swift in Sources */,
 				85B0996721626EAA007102D2 /* Song.swift in Sources */,
 				85B09A8B2163817C007102D2 /* CALayer+Extension.swift in Sources */,
 				85B0996821626EAA007102D2 /* PersionPreference.swift in Sources */,

@@ -366,7 +366,7 @@ class MusicBoxPopView: UIView {
                 cellModel?.isSelected = true
                 
                 let albumPath = AlbumPictures.albumPicturesLocalPath(cellModel?.song?.albumPicturePath ?? "")
-                albumImageView.image = UIImage(contentsOfFile: albumPath)
+                albumImageView.cornerImage(UIImage(contentsOfFile: albumPath), size: CGSize(width: 80.0.cgFloat, height: 80.0.cgFloat))
             }
             
         }
@@ -383,6 +383,11 @@ class MusicBoxPopView: UIView {
         }
         
         playerButton.isSelected = isPlaying
+        
+        albumImageView.addRotationAnimation()
+        if !isPlaying {
+            albumImageView.pauseAnimation()
+        }
         
         if let list = dataList,list.count > 0 {
             noDataView.isHidden = true
@@ -597,12 +602,14 @@ extension MusicBoxPopView:UITableViewDelegate {
                 preference.playUrl = song.serverUrl ?? ""
             }
             
+            albumImageView.pauseAnimation()
             let albumPath = AlbumPictures.albumPicturesLocalPath(song.albumPicturePath ?? "")
-            albumImageView.image = UIImage(contentsOfFile: albumPath)
+            albumImageView.cornerImage( UIImage(contentsOfFile: albumPath), size: CGSize(width: 80.0.cgFloat, height: 80.0.cgFloat))
+            
             playerButton.isSelected = true
             isPlaying = playerButton.isSelected
             completed?(.switchPlay,preference)
-            
+            albumImageView.resumeAnimation()
         }
     }
 }
@@ -674,6 +681,13 @@ extension MusicBoxPopView {
             button.isSelected = !button.isSelected
             preference.isPlay = button.isSelected
             isPlaying = button.isSelected
+            
+            if isPlaying {
+                albumImageView.layer.resumeAnimate()
+            } else {
+                albumImageView.layer.pauseAnimate()
+            }
+            
             completed?(.play,preference)
         }
     }
