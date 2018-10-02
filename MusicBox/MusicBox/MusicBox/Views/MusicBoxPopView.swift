@@ -7,6 +7,7 @@
 //  音乐盒
 
 import UIKit
+import SnapKit
 
 class MusicBoxPopView: UIView {
 
@@ -21,6 +22,13 @@ class MusicBoxPopView: UIView {
     fileprivate var dataList:[MusicPlayListCellViewModel]?
     
     // MARK :懒加载
+    
+    /// 播放动图
+    fileprivate var albumImageView:UIImageView = {
+        let view = UIImageView()
+        
+        return view
+    }()
     
     /// 播放器按钮
     fileprivate var playerButton:UIButton = {
@@ -104,21 +112,28 @@ class MusicBoxPopView: UIView {
     /// 底部工具条
     fileprivate lazy var bottomBarView:UIView = {
         let view = UIView()
+        view.addSubview(albumImageView)
         view.addSubview(playerButton)
         view.addSubview(muteButton)
         view.addSubview(volumeSlider)
         view.addSubview(playloopButton)
         
-        playerButton.snp.makeConstraints({ (make) in
+        albumImageView.snp.makeConstraints({ (make) in
             make.centerY.equalToSuperview()
-            make.width.height.equalTo(56.0.cgFloat)
+            make.width.height.equalTo(80.0.cgFloat)
             make.left.equalToSuperview().offset(40.0.cgFloat)
+        })
+        
+        playerButton.snp.makeConstraints({ (make) in
+            make.width.height.equalTo(56.0.cgFloat)
+            make.centerX.equalTo(albumImageView.snp.centerX)
+            make.centerY.equalTo(albumImageView.snp.centerY)
         })
         
         muteButton.snp.makeConstraints({ (make) in
             make.centerY.equalToSuperview()
             make.width.height.equalTo(52.0.cgFloat)
-            make.left.equalTo(playerButton.snp.right).offset(40.0.cgFloat)
+            make.left.equalTo(albumImageView.snp.right).offset(40.0.cgFloat)
         })
         
         volumeSlider.snp.makeConstraints({ (make) in
@@ -349,6 +364,9 @@ class MusicBoxPopView: UIView {
             if let item = selectedIndexPath?.item {
                 let cellModel = viewModel?.playList?[item]
                 cellModel?.isSelected = true
+                
+                let albumPath = AlbumPictures.albumPicturesLocalPath(cellModel?.song?.albumPicturePath ?? "")
+                albumImageView.image = UIImage(contentsOfFile: albumPath)
             }
             
         }
@@ -578,6 +596,9 @@ extension MusicBoxPopView:UITableViewDelegate {
             } else {
                 preference.playUrl = song.serverUrl ?? ""
             }
+            
+            let albumPath = AlbumPictures.albumPicturesLocalPath(song.albumPicturePath ?? "")
+            albumImageView.image = UIImage(contentsOfFile: albumPath)
             playerButton.isSelected = true
             isPlaying = playerButton.isSelected
             completed?(.switchPlay,preference)
