@@ -447,8 +447,6 @@ class MusicBoxPopView: UIView {
         
         MusicBox.shared.isMusixBoxBackground = false
         
-        NotificationCenter.default.addObserver(self, selector: #selector(volumeChanged(_:)), name: NSNotification.Name("AVSystemController_SystemVolumeDidChangeNotification"), object: nil)
-        
         NotificationCenter.default.addObserver(self, selector: #selector(playListPlayNextSong), name: MusicBoxPlayNextSongKey, object: nil)
         
         DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + Double(Int64( Double(NSEC_PER_SEC) * 0.2 )) / Double(NSEC_PER_SEC), execute: {
@@ -457,22 +455,34 @@ class MusicBoxPopView: UIView {
                 
                 self?.layoutIfNeeded()
             }) { (complete) in
+                // 监听音量变化
+                Volume.when(.up) { [weak self] (stepValue) in
+                    self?.volumeChanged(.up,stepValue: stepValue)
+                }
                 
+                Volume.when(.down) { [weak self] (stepValue) in
+                    self?.volumeChanged(.down,stepValue: stepValue)
+                }
             }
         })
+        
+        
     }
     
     open func hidden(_ completed:@escaping ()->()) {
-        NotificationCenter.default.removeObserver(self, name: NSNotification.Name("AVSystemController_SystemVolumeDidChangeNotification"), object: nil)
+       
         NotificationCenter.default.removeObserver(self, name: MusicBoxPlayNextSongKey, object: nil)
         
         MusicBox.shared.isMusixBoxBackground = true
+        
+        
         
         UIView.animate(withDuration: 0.3, delay: 0.0, options: .curveEaseIn, animations: { [weak self] in
             self?.hiddenUpdateConstraint()
             
             self?.layoutIfNeeded()
         }) { [weak self] (complete) in
+            Volume.reset()
             
             self?.coverView.backgroundColor = UIColor(white: 0.0, alpha: 0.0)
             if let subviews = self?.subviews {
@@ -646,12 +656,34 @@ extension MusicBoxPopView:MusicPlayListCellProtocol {
 
 extension MusicBoxPopView {
     
-    @objc fileprivate func volumeChanged(_ notification:Notification) {
-        if let volume = notification.userInfo?["AVSystemController_AudioVolumeNotificationParameter"] as? Float {
-            volumeSlider.value = volume
-            sliderValueChanged(volumeSlider)
+    
+    /// 音量变化监听
+    ///
+    /// - Parameters:
+    ///   - type: <#type description#>
+    ///   - stepValue: <#stepValue description#>
+    fileprivate func volumeChanged(_ type:Volume,stepValue:Float) {
+        var volume = volumeSlider.value
+        
+        switch type {
+        case .up:
+            if volume + stepValue > 1.0 {
+                volume = 1.0
+            } else {
+                volume += stepValue
+            }
+            
+            
+        case .down:
+            if volume - stepValue <= 0 {
+                volume = 0.0
+            } else {
+                volume -= stepValue
+            }
         }
         
+        volumeSlider.value = volume
+        sliderValueChanged(volumeSlider)
     }
     
     /// 调整音量

@@ -160,6 +160,7 @@
 		85B09A8921636825007102D2 /* AlbumPictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8821636825007102D2 /* AlbumPictures.swift */; };
 		85B09A8B2163817C007102D2 /* CALayer+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8A2163817C007102D2 /* CALayer+Extension.swift */; };
 		85B09A8D2163A516007102D2 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8C2163A516007102D2 /* UIImageView+Extension.swift */; };
+		85B09A902163E1D4007102D2 /* Volume.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8F2163E1D4007102D2 /* Volume.swift */; };
 		B11001364CF2C6B7E17BA5E8 /* Pods_MusicBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBFA683040A69382D508AA3 /* Pods_MusicBox.framework */; };
 /* End PBXBuildFile section */
 
@@ -322,6 +323,7 @@
 		85B09A8821636825007102D2 /* AlbumPictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPictures.swift; sourceTree = "<group>"; };
 		85B09A8A2163817C007102D2 /* CALayer+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+Extension.swift"; sourceTree = "<group>"; };
 		85B09A8C2163A516007102D2 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		85B09A8F2163E1D4007102D2 /* Volume.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Volume.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -382,6 +384,7 @@
 		85B0994E21626EA9007102D2 /* MusicBox */ = {
 			isa = PBXGroup;
 			children = (
+				85B09A8E2163E177007102D2 /* Volume */,
 				85B0994F21626EA9007102D2 /* ViewModels */,
 				85B0995421626EA9007102D2 /* Models */,
 				85B0995921626EA9007102D2 /* Manager */,
@@ -684,6 +687,14 @@
 			path = Animator;
 			sourceTree = "<group>";
 		};
+		85B09A8E2163E177007102D2 /* Volume */ = {
+			isa = PBXGroup;
+			children = (
+				85B09A8F2163E1D4007102D2 /* Volume.swift */,
+			);
+			path = Volume;
+			sourceTree = "<group>";
+		};
 		8E2E92221A7A6F8E7A46AAF6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -936,6 +947,7 @@
 				85B09A5E21628DE5007102D2 /* ESRefreshFooterAnimator.swift in Sources */,
 				85B0996B21626EAA007102D2 /* MusicBox.swift in Sources */,
 				85B099E4216282D4007102D2 /* UIView+Radius.swift in Sources */,
+				85B09A902163E1D4007102D2 /* Volume.swift in Sources */,
 				85B0997521627410007102D2 /* CGFloat+Extension.swift in Sources */,
 				85B09A5921628DE5007102D2 /* ESPullToRefresh+Manager.swift in Sources */,
 				85B0997D216279C8007102D2 /* UIImage+Color.swift in Sources */,
