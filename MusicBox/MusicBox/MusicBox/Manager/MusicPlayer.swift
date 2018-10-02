@@ -16,11 +16,9 @@ class MusicPlayer: NSObject {
     fileprivate var player:AVAudioPlayer?
     
     /// 是否单曲循环
-    fileprivate var isLoop:Bool = false {
-        didSet {
-            player?.numberOfLoops = isLoop ? -1 : 0
-        }
-    }
+    fileprivate var isLoop:Bool = false
+    /// 音量
+    fileprivate var volume:Float = 1.0
     
     /// 初始化播放器
     class func setupPlayer() {
@@ -41,6 +39,8 @@ class MusicPlayer: NSObject {
         let player = try? AVAudioPlayer.init(contentsOf: URL(fileURLWithPath: filePath))
         player?.numberOfLoops = 0
         player?.delegate = shared
+        player?.numberOfLoops = shared.isLoop ? -1 : 0
+        player?.volume = shared.volume
         shared.player = player
         
         if let result = player?.prepareToPlay() {
@@ -76,8 +76,12 @@ class MusicPlayer: NSObject {
     }
     
     class func updateVolume(_ volume:Float) {
-        shared.player?.volume = volume
-        shared.player?.updateMeters()
+        if let player = shared.player {
+            player.volume = volume
+            player.updateMeters()
+        }
+        
+        shared.volume = volume
     }
 }
 
