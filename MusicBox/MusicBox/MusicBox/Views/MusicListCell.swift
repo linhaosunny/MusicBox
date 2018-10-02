@@ -15,6 +15,7 @@ class MusicListCell: UITableViewCell {
             if let model = viewModel {
                 titleLabel.text = model.titleText
                 timeLabel.text = model.timeLabelText
+                albumImageView.image = UIImage(contentsOfFile: model.albumPicturePath ?? "")
                 addButton.setImage(UIImage(named: model.addButtonNormalIcon ?? ""), for: .normal)
                 addButton.setImage(UIImage(named: model.addButtonSeletedIcon ?? ""), for: .selected)
                 
@@ -25,6 +26,13 @@ class MusicListCell: UITableViewCell {
     }
     
     weak var delegate:MusicListCellProtocol?
+    
+    /// 封面图
+    fileprivate var albumImageView:UIImageView = {
+        let view = UIImageView()
+        
+        return view
+    }()
     
     /// 歌曲标题
     fileprivate var titleLabel:UILabel = {
@@ -74,12 +82,14 @@ class MusicListCell: UITableViewCell {
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+       
     }
     
     // MARK: 私有方法
     fileprivate func setupMusicListCell() {
         backgroundColor = UIColor.white
 
+        addSubview(albumImageView)
         addSubview(titleLabel)
         addSubview(timeLabel)
         addSubview(addButton)
@@ -90,15 +100,21 @@ class MusicListCell: UITableViewCell {
     
     fileprivate func layoutConstraint() {
         
-        titleLabel.snp.makeConstraints { (make) in
+        albumImageView.snp.makeConstraints { (make) in
             make.left.equalToSuperview().offset(40.cgFloat)
+            make.centerY.equalToSuperview()
+            make.width.height.equalTo(80.0.cgFloat)
+        }
+        
+        titleLabel.snp.makeConstraints { (make) in
+            make.left.equalTo(albumImageView.snp.right).offset(40.cgFloat)
             make.top.equalToSuperview().offset(20.cgFloat)
             make.right.equalTo(addButton.snp.left).offset(-40.0.cgFloat)
         }
         
         
         timeLabel.snp.makeConstraints { (make) in
-            make.left.equalToSuperview().offset(40.cgFloat)
+            make.left.equalTo(albumImageView.snp.right).offset(40.cgFloat)
             make.top.equalTo(titleLabel.snp.bottom).offset(10.0.cgFloat)
             make.right.equalTo(addButton.snp.left).offset(-40.0.cgFloat)
         }

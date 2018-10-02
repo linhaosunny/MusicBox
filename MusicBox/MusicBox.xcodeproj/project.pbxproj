@@ -157,6 +157,7 @@
 		85B09A8421629634007102D2 /* select_btn_s_yellow@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85B09A7821629633007102D2 /* select_btn_s_yellow@3x.png */; };
 		85B09A8521629634007102D2 /* select_btn_s_red@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 85B09A7921629633007102D2 /* select_btn_s_red@3x.png */; };
 		85B09A8721632F9A007102D2 /* MusicPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8621632F9A007102D2 /* MusicPlayer.swift */; };
+		85B09A8921636825007102D2 /* AlbumPictures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B09A8821636825007102D2 /* AlbumPictures.swift */; };
 		B11001364CF2C6B7E17BA5E8 /* Pods_MusicBox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5CBFA683040A69382D508AA3 /* Pods_MusicBox.framework */; };
 /* End PBXBuildFile section */
 
@@ -316,6 +317,7 @@
 		85B09A7821629633007102D2 /* select_btn_s_yellow@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_btn_s_yellow@3x.png"; sourceTree = "<group>"; };
 		85B09A7921629633007102D2 /* select_btn_s_red@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "select_btn_s_red@3x.png"; sourceTree = "<group>"; };
 		85B09A8621632F9A007102D2 /* MusicPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MusicPlayer.swift; sourceTree = "<group>"; };
+		85B09A8821636825007102D2 /* AlbumPictures.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlbumPictures.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,6 +404,7 @@
 				85B0995621626EA9007102D2 /* Song.swift */,
 				85B0995721626EA9007102D2 /* PersionPreference.swift */,
 				85B0995821626EA9007102D2 /* Preference.swift */,
+				85B09A8821636825007102D2 /* AlbumPictures.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -910,6 +913,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85B09A8921636825007102D2 /* AlbumPictures.swift in Sources */,
 				85B09A4621628D66007102D2 /* RefreshHeaderNoPullUpAnimator.swift in Sources */,
 				85B09A5B21628DE5007102D2 /* ESRefreshComponent.swift in Sources */,
 				85B0997B216276C3007102D2 /* UIColor+Hex.swift in Sources */,

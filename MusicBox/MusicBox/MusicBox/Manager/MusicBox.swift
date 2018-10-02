@@ -385,14 +385,14 @@ extension MusicBox {
                 "歌曲简介:" + "\(song.albumArtist ?? "")" + "\n" +
                 "歌曲作者:" + "\(song.artist ?? "")" + "\n" +
                 "歌曲链接:" + "\(String(describing: song.assetURL?.absoluteString))"
+
             )
             
             // 如果有该歌曲不用导出
             if checkHasSong(title: song.title ?? "", artist: song.artist ?? "") {
                 continue
             }
-            
-            
+        
             postLoadingMessage(.start)
             
             // 导出文件
@@ -405,6 +405,7 @@ extension MusicBox {
                 localSong.ipodLibraryUrl = song.assetURL?.absoluteString
                 localSong.localUrl = songUrl
                 localSong.playBackDuration = timeToSeconds(time: song.playbackDuration)
+                localSong.albumPicturePath = AlbumPictures.saveAlbumPicture(song.title, image: song.artwork?.image(at: CGSize(width: 180.0.cgFloat, height: 180.0.cgFloat)))
                 
                 appendMusicListSong(localSong)
                 

@@ -10,12 +10,19 @@ import UIKit
 
 class MusicListCellViewModel: NSObject {
 
+    /// 歌曲名和作者
     var titleText:String?
     
+    /// 歌曲时长
     var timeLabelText:String?
     
+    /// 封面图
+    var albumPicturePath:String?
+    
+    /// 未添加
     var addButtonNormalIcon:String?
     
+    /// 添加选中
     var addButtonSeletedIcon:String?
     
     var isAdd:Bool = false
@@ -25,8 +32,9 @@ class MusicListCellViewModel: NSObject {
     convenience init(_ song:Song) {
         self.init()
         self.song = song
-        titleText = song.title ?? ""
+        titleText = (song.title ?? "") + " - " + (song.artist ?? "")
         timeLabelText = song.playBackDuration ?? ""
+        albumPicturePath = AlbumPictures.albumPicturesLocalPath(song.albumPicturePath ?? "")
         addButtonNormalIcon = "live_music_icon_plus"
         addButtonSeletedIcon = "select_btn_s".nameWithTheme()
         isAdd = Bool(song.isAddPlayList) ?? false
