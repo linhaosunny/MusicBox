@@ -72,6 +72,9 @@ class MusicPlayer: NSObject {
     }
     
     class func setLoop(_ isLoop:Bool = false) {
+        if let player = shared.player {
+            player.numberOfLoops = isLoop ? -1 : 0
+        }
         shared.isLoop = isLoop
     }
     

@@ -134,9 +134,10 @@ class MusicBox: NSObject {
         }
         
         if let operation = shared.completed {
-            let musicBox = MusicBoxPopView(screen, complete: operation, finish: {
+            let musicBox = MusicBoxPopView(screen, complete: operation, finish: {(view) in
                 if Preference.shared.isUpdate {
                     Preference.updatePeferenceFile(shared.userKey, successed: { (prefrence, msg) in
+                        view?.viewModel = MusicBoxViewModel.createViewModel()
                     }, failed: { (msg) in
                     })
                 }
@@ -401,6 +402,7 @@ extension MusicBox {
                 localSong.title = song.title
                 localSong.artist = song.artist
                 localSong.albumArtist = song.albumArtist
+                localSong.ipodLibraryUrl = song.assetURL?.absoluteString
                 localSong.localUrl = songUrl
                 localSong.playBackDuration = timeToSeconds(time: song.playbackDuration)
                 

@@ -191,10 +191,10 @@ class MusicBoxPopView: UIView {
     
     fileprivate var completed:((_ action:MusicActionType,_ info:PersionPreference)->())?
     
-    fileprivate var finished:(()->())?
+    fileprivate var finished:((_ view:MusicBoxPopView?)->())?
     
     // MARK : 构造方法
-    convenience init(_ screen:ScreenDirection = .portrail, complete:@escaping (_ action:MusicActionType,_ info:PersionPreference)->(),finish:@escaping ()->()) {
+    convenience init(_ screen:ScreenDirection = .portrail, complete:@escaping (_ action:MusicActionType,_ info:PersionPreference)->(),finish:@escaping (_ view:MusicBoxPopView?)->()) {
         self.init()
         screen_type = screen
         completed = complete
@@ -459,7 +459,7 @@ class MusicBoxPopView: UIView {
             }
             self?.removeFromSuperview()
             completed()
-            self?.finished?()
+            self?.finished?(self)
             
         }
     }
@@ -685,6 +685,7 @@ extension MusicBoxPopView {
     @objc fileprivate func musiclistButtonClick(_ button:UIButton) {
         viewModel?.updateLocalList()
         
+        finished?(self)
         let popView = MusicLocalListView(screen_type, complete: { (type, preference) in
             
         }) { [weak self] in

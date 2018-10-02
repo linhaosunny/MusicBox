@@ -34,6 +34,9 @@ class Song: NSObject {
     /// 歌曲资源本地链接
     var localUrl:String?
     
+    /// ipod库的地址
+    var ipodLibraryUrl:String?
+    
     /// 歌曲资源外部链接
     var serverUrl:String?
     
@@ -53,6 +56,7 @@ class Song: NSObject {
         artist = dict["artist"]
         albumArtist = dict["albumArtist"]
         localUrl = dict["localUrl"]
+        ipodLibraryUrl = dict["ipodLibraryUrl"]
         serverUrl = dict["serverUrl"]
         playBackDuration = dict["playBackDuration"]
         isAddPlayList = dict["isAddPlayList"] ?? SongAddType.delete.rawValue
@@ -67,6 +71,7 @@ class Song: NSObject {
         dict.updateValue(artist ?? "", forKey: "artist")
         dict.updateValue(albumArtist ?? "", forKey: "albumArtist")
         dict.updateValue(localUrl ?? "", forKey: "localUrl")
+        dict.updateValue(ipodLibraryUrl ?? "", forKey: "ipodLibraryUrl")
         dict.updateValue(serverUrl ?? "", forKey: "serverUrl")
         dict.updateValue(playBackDuration ?? "", forKey: "playBackDuration")
         dict.updateValue(isAddPlayList, forKey: "isAddPlayList")
