@@ -8,6 +8,10 @@
 
 import Foundation
 
+
+/// 内部播放器播放一曲结束
+let MusicBoxInterPlayerPlayCompletedKey = NSNotification.Name("MusicBox.InternalPlayer.playCompleted")
+
 /// 下一曲
 let MusicBoxPlayNextSongKey = NSNotification.Name("MusicBox.playNextSong")
 

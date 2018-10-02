@@ -47,19 +47,31 @@ class MusicBox: NSObject {
     // 歌曲加载状态
     var loadSongStatus:MusicLoadingStatus = .loaded
     // 是否使用内部播放器
-    fileprivate var isInternelPlayer:Bool = true
+    fileprivate var isInternelPlayer:Bool = false
     
     fileprivate var completed:((_ action:MusicActionType,_ info:PersionPreference)->())?
     
+    
+    deinit {
+        if isInternelPlayer {
+            NotificationCenter.default.removeObserver(self, name: MusicBoxInterPlayerPlayCompletedKey, object: nil)
+        }
+    }
+    
     /// 初始化音乐盒
     class func setupMusicBox(isInternelPlayer:Bool = true) {
-        
-        shared.isInternelPlayer = isInternelPlayer
-        
-        if isInternelPlayer {
-            MusicPlayer.setupPlayer()
+    
+        if shared.isInternelPlayer {
+            NotificationCenter.default.removeObserver(self, name: MusicBoxInterPlayerPlayCompletedKey, object: nil)
         }
         
+        shared.isInternelPlayer = isInternelPlayer
+
+        if isInternelPlayer {
+            MusicPlayer.setupPlayer()
+            NotificationCenter.default.addObserver(shared, selector: #selector(internalPlayerPlayCompleted), name: MusicBoxInterPlayerPlayCompletedKey, object: nil)
+        }
+
         // 读取个人配置
         Preference.getPreference(shared.userKey,song:nil)
         
@@ -180,6 +192,13 @@ class MusicBox: NSObject {
 
 // MARK: - 内部播放工具
 extension MusicBox {
+    
+    /// 内部播放器播放结束
+    @objc fileprivate func internalPlayerPlayCompleted() {
+        if isInternelPlayer {
+            MusicBox.nextSong()
+        }
+    }
     
     /// 内部播放操作
     ///

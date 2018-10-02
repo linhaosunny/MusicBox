@@ -83,6 +83,6 @@ class MusicPlayer: NSObject {
 
 extension MusicPlayer:AVAudioPlayerDelegate {
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
-        
+        NotificationCenter.default.post(name: MusicBoxInterPlayerPlayCompletedKey, object: nil)
     }
 }
