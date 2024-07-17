@@ -102,7 +102,7 @@ class MusicLocalListView: UIView {
         view.tableHeaderView = UIView(frame: CGRect.zero)
         view.rowHeight = 120.cgFloat
         view.dataSource = self
-        
+        view.isUserInteractionEnabled = true
         return view
     }()
     /// 无数据显示的时候

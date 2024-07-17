@@ -10,17 +10,22 @@ import Foundation
 import UIKit
 
 
-let iphoneX = UIScreen.instancesRespond(to: #selector(getter: UIScreen.main.currentMode)) ? __CGSizeEqualToSize((UIScreen.main.currentMode?.size)!, CGSize(width: 1125, height: 2436)) : false
+var isiPhoneXSeries: Bool {
+    guard #available(iOS 11.0, *) else {
+        return false
+    }
+    return UIApplication.shared.windows[0].safeAreaInsets.top == 44.0
+}
 
 /// 状态栏高度
-let kStatusBarHeight = iphoneX ? 44.0 : 20.0
+let kStatusBarHeight = isiPhoneXSeries ? 44.0 : 20.0
 /// 导航栏高度
 let kNavigationBarHeight: CGFloat = 44.0
 
 /// 顶部安全区距离
 let kTopSafeOffset = UIApplication.shared.statusBarFrame.size.height > 20 ? (kStatusBarHeight - 20) :0
 /// 底部安全区距离
-let kBottomSafeOffset = iphoneX ? 34.0 : 0
+let kBottomSafeOffset = isiPhoneXSeries ? 34.0 : 0
 
 /// 导航栏加状态栏的高度
 let kNavAndStatusBarHeight: CGFloat = CGFloat(kStatusBarHeight) + kNavigationBarHeight

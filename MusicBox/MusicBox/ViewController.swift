@@ -27,7 +27,7 @@ class ViewController: UIViewController {
         popMusicButton.viewBorderRadius(6.0.cgFloat, width: 2.0.cgFloat, color: UIColor.colorWithTheme())
         
         popMusicButton.snp.makeConstraints { (make) in
-            make.centerX.centerY.equalToSuperview()
+            make.center.equalToSuperview()
             make.width.equalTo(200.0.cgFloat)
             make.height.equalTo(45.0.cgFloat)
         }

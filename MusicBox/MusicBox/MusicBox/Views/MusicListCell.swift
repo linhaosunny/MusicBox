@@ -89,11 +89,11 @@ class MusicListCell: UITableViewCell {
     fileprivate func setupMusicListCell() {
         backgroundColor = UIColor.white
 
-        addSubview(albumImageView)
-        addSubview(titleLabel)
-        addSubview(timeLabel)
-        addSubview(addButton)
-        addSubview(bottomLine)
+        contentView.addSubview(albumImageView)
+        contentView.addSubview(titleLabel)
+        contentView.addSubview(timeLabel)
+        contentView.addSubview(addButton)
+        contentView.addSubview(bottomLine)
         
         addButton.addTarget(self, action: #selector(addButtonClick(_:)), for: .touchUpInside)
     }

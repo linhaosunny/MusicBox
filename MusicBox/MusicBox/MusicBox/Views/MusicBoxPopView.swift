@@ -314,8 +314,9 @@ class MusicBoxPopView: UIView {
         }
         
         bottomBarView.snp.makeConstraints { (make) in
-            make.left.right.bottom.equalToSuperview()
+            make.left.right.equalToSuperview()
             make.height.equalTo(104.0.cgFloat)
+            make.bottom.equalToSuperview().inset(kBottomSafeOffset)
         }
     }
     
